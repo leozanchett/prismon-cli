@@ -2,15 +2,30 @@
 
 Proxy HTTPS local para auditar chamadas de ferramentas LLM (desktop, web e CLIs de terminal) com guardrails e observabilidade centralizados.
 
-## Instalação (macOS / Linux)
+## Instalação
+
+### Homebrew (macOS / Linux — recomendado)
+
+```bash
+brew tap leozanchett/prismon
+brew trust leozanchett/prismon   # exigência do Homebrew para taps de terceiros (1x)
+brew install prismon
+```
+
+Atualizar: `brew upgrade prismon`
+
+### Script (macOS / Linux)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.sh | sh
 ```
 
 - Instala em `~/.local/bin` (override: `PRISMON_INSTALL_DIR`)
-- Versão específica: `PRISMON_VERSION=0.1.0 sh install.sh`
-- Windows: baixe o `.zip` do [último release](https://github.com/leozanchett/prismon-cli/releases/latest)
+- Versão específica: `PRISMON_VERSION=0.2.0 sh install.sh`
+
+### Windows
+
+Baixe o `.zip` do [último release](https://github.com/leozanchett/prismon-cli/releases/latest).
 
 ## Uso
 
@@ -18,7 +33,7 @@ curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/instal
 prismon   # primeira execução: configura gateway + key, instala a CA local e os aliases de CLIs
 ```
 
-Depois disso, use as ferramentas normalmente (Claude Desktop, ChatGPT, Gemini, grok, codex, agy...) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
+Depois disso, use as ferramentas normalmente (Claude Desktop, ChatGPT, Gemini, grok, codex, agy...) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado. O CLI avisa no startup quando houver versão nova.
 
 ## Comandos
 
