@@ -49,7 +49,7 @@ main() {
   bundle="prismon_${version}_${platform}.tar.gz"
   url="https://github.com/$REPO/releases/download/v${version}/${bundle}"
   tmpdir="$(mktemp -d)"
-  trap 'rm -rf "$tmpdir"' EXIT
+  trap 'rm -rf "$tmpdir"; rm -f "${staged:-}" 2>/dev/null || true' EXIT
 
   log "baixando $url"
   curl -fsSL "$url" -o "$tmpdir/$bundle" || fail "download falhou — confira se o release v$version tem o asset $bundle"
@@ -58,9 +58,15 @@ main() {
     || fail "pacote não contém o binário prismon"
 
   mkdir -p "$INSTALL_DIR"
-  cp "$tmpdir/prismon-bin" "$INSTALL_DIR/prismon"
-  chmod +x "$INSTALL_DIR/prismon"
-  xattr -d com.apple.quarantine "$INSTALL_DIR/prismon" 2>/dev/null || true
+  # Escrita atômica em arquivo novo + rename. Um `cp` direto seguiria o symlink
+  # do layout versionado (~/.prismon/versions/<v>/prismon) e sobrescreveria um
+  # Mach-O assinado in-place: o macOS invalida a assinatura em cache do inode e
+  # mata qualquer execução com SIGKILL ("zsh: killed").
+  staged="$INSTALL_DIR/.prismon.install.$$"
+  rm -f "$staged"
+  cp "$tmpdir/prismon-bin" "$staged"
+  chmod +x "$staged"
+  xattr -d com.apple.quarantine "$staged" 2>/dev/null || true
 
   if command -v shasum >/dev/null 2>&1; then
     sums_url="https://github.com/$REPO/releases/download/v${version}/prismon_${version}_checksums.txt"
@@ -68,12 +74,14 @@ main() {
       expected="$(grep "  $bundle\$" "$tmpdir/checksums.txt" | awk '{print $1}')"
       actual="$(shasum -a 256 "$tmpdir/$bundle" | awk '{print $1}')"
       if [ -n "$expected" ] && [ "$expected" != "$actual" ]; then
-        rm -f "$INSTALL_DIR/prismon"
+        rm -f "$staged"
         fail "checksum não confere (esperado $expected, obtido $actual)"
       fi
       [ -n "$expected" ] && log "checksum ok"
     fi
   fi
+
+  mv -f "$staged" "$INSTALL_DIR/prismon"
 
   log "instalado em $INSTALL_DIR/prismon"
   case ":$PATH:" in
