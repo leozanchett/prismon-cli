@@ -50,7 +50,7 @@ Depois disso, use as ferramentas normalmente (Claude Desktop, Claude Code, ChatG
 | `prismon status` | snapshot da sessão ativa (status, capturas, uptime, totais) |
 | `prismon matrix` | lista os apps e CLIs de IA homologados |
 | `prismon stop` | para o serviço (ele volta no próximo login) |
-| `prismon doctor` | diagnóstico do ambiente |
+| `prismon doctor` | diagnóstico do ambiente, com auto-correção de estados degradados |
 | `prismon config` | altera a URL do gateway e a virtual key salvas |
 | `prismon update` | atualiza para a última versão agora (`--check` apenas verifica) |
 | `prismon updater` | controla o auto-update de hora em hora (`install`/`status`/`uninstall`) |
