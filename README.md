@@ -16,9 +16,19 @@ curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/instal
 
 É o mesmo layout que o auto-update usa, então o CLI passa a se manter atualizado sozinho.
 
-### Windows
+### Windows (Path A — CLIs no terminal)
 
-Baixe o `.zip` do [último release](https://github.com/leozanchett/prismon-cli/releases/latest).
+No PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 | iex
+```
+
+- Valida o sha256 do release antes de instalar
+- Instala em `%LOCALAPPDATA%\prismon` e adiciona esse diretório ao PATH do usuário
+- Versão específica: `$env:PRISMON_VERSION='0.4.0'; irm ... | iex`
+
+Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows) e sobe o proxy como serviço de login. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. Captura de apps desktop/navegador ainda é só no macOS.
 
 ### Já instalou por Homebrew?
 
@@ -38,9 +48,9 @@ prismon
 prismon   # primeira execução: configura gateway + key, instala a CA local e os aliases de CLIs
 ```
 
-No macOS o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado: o CLI verifica se há versão nova a cada hora e se atualiza, com rollback automático se a versão nova não subir.
+No macOS e no Windows o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado. No Windows só os CLIs do terminal entram (não há proxy de sistema).
 
-Depois disso, use as ferramentas normalmente (Claude Desktop, Claude Code, ChatGPT, Gemini, grok, codex, agy...) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
+Depois disso, use as ferramentas normalmente (Claude Desktop e navegadores no macOS; Claude Code, grok, codex, agy e gemini no terminal) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
 
 ## Comandos
 
