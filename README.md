@@ -28,7 +28,7 @@ irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 |
 - Instala em `%LOCALAPPDATA%\prismon` e adiciona esse diretório ao PATH do usuário
 - Versão específica: `$env:PRISMON_VERSION='0.4.0'; irm ... | iex`
 
-Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows) e sobe o proxy como serviço de login. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. Captura de apps desktop/navegador ainda é só no macOS.
+Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
 
 ### Já instalou por Homebrew?
 
@@ -48,7 +48,7 @@ prismon
 prismon   # primeira execução: configura gateway + key, instala a CA local e os aliases de CLIs
 ```
 
-No macOS e no Windows o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado. No Windows só os CLIs do terminal entram (não há proxy de sistema).
+No macOS e no Windows o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado. No Windows os CLIs entram pelos wrappers e o desktop/web entra pelo proxy de sistema (WinINET/WinHTTP), quando o app respeita o proxy do SO.
 
 Depois disso, use as ferramentas normalmente (Claude Desktop e navegadores no macOS; Claude Code, grok, codex, agy e gemini no terminal) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
 
