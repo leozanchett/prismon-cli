@@ -36,7 +36,7 @@ irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 |
 - Instala em `%LOCALAPPDATA%\prismon` e adiciona esse diretório ao PATH do usuário
 - Versão específica: `$env:PRISMON_VERSION='0.4.0'; irm ... | iex`
 
-Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. No Windows, Claude Web, ChatGPT Web (visitante) e Gemini Web no Chrome ou Edge estão homologados — feche o navegador por completo, reabra e envie uma mensagem; só abrir o site não captura. Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
+Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. No Windows, Claude Desktop, Claude Web, ChatGPT Web (visitante) e Gemini Web estão homologados — feche o app ou o navegador por completo (Claude Desktop pela bandeja), reabra e envie uma mensagem; só abrir não captura. A primeira execução pede UAC para instalar a CA no store da máquina (necessário para o Claude Desktop da Microsoft Store). Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
 
 ### Já instalou por Homebrew?
 
@@ -58,7 +58,7 @@ prismon   # primeira execução: configura gateway + key, instala a CA local e o
 
 No macOS e no Windows o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado. No Windows os CLIs entram pelos wrappers e o desktop/web entra pelo proxy de sistema (WinINET/WinHTTP), quando o app respeita o proxy do SO.
 
-Depois disso, use as ferramentas normalmente (Claude Desktop e navegadores no macOS; Claude Code, grok, codex, agy e gemini no terminal) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
+Depois disso, use as ferramentas normalmente (Claude Desktop e navegadores no macOS e no Windows; Claude Code, grok, codex, agy e gemini no terminal) — o tráfego LLM é interceptado, avaliado pelos guardrails e registrado.
 
 ## Comandos
 
