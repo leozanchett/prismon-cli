@@ -28,7 +28,7 @@ irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 |
 - Instala em `%LOCALAPPDATA%\prismon` e adiciona esse diretório ao PATH do usuário
 - Versão específica: `$env:PRISMON_VERSION='0.4.0'; irm ... | iex`
 
-Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. Para ChatGPT/Claude no Chrome ou Edge, feche o navegador por completo, reabra e envie uma mensagem — só abrir o site não captura. Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
+Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. No Windows, ChatGPT Web (visitante) e Gemini Web no Chrome ou Edge estão homologados — feche o navegador por completo, reabra e envie uma mensagem; só abrir o site não captura. Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
 
 ### Já instalou por Homebrew?
 
