@@ -12,6 +12,14 @@ set -eu
 
 REPO="leozanchett/prismon-cli"
 INSTALL_DIR="${PRISMON_INSTALL_DIR:-$HOME/.local/bin}"
+# Forma com $HOME literal, para o rc não ficar preso ao caminho absoluto atual.
+case "$INSTALL_DIR" in
+  "$HOME"/*) INSTALL_DIR_LITERAL="\$HOME${INSTALL_DIR#"$HOME"}" ;;
+  *) INSTALL_DIR_LITERAL="$INSTALL_DIR" ;;
+esac
+# Mesmo marcador que o CLI grava em path_entry.go: os dois reconhecem o bloco um
+# do outro e nenhum duplica a linha.
+PATH_MARKER="# added by prismon-install"
 
 log() { printf 'prismon-install: %s\n' "$*" >&2; }
 fail() { printf 'prismon-install: erro: %s\n' "$*" >&2; exit 1; }
@@ -84,11 +92,52 @@ main() {
   mv -f "$staged" "$INSTALL_DIR/prismon"
 
   log "instalado em $INSTALL_DIR/prismon"
+
   case ":$PATH:" in
-    *":$INSTALL_DIR:"*) ;;
-    *) log "aviso: $INSTALL_DIR não está no PATH — adicione ao seu ~/.zshrc" ;;
+    *":$INSTALL_DIR:"*)
+      log "rode: prismon"
+      return
+      ;;
   esac
-  log "rode: prismon"
+
+  # ~/.local/bin não é PATH default no macOS nem em boa parte das distros. Até a
+  # 0.5.10 o script só avisava e mandava rodar `prismon` na linha seguinte, o que
+  # levava direto a "command not found" numa máquina do zero. Sob `curl | sh` não
+  # há stdin interativo para perguntar, então gravamos o export no rc do shell.
+  case "${SHELL:-}" in
+    */fish) primary_rc="$HOME/.config/fish/config.fish" ;;
+    */bash) primary_rc="$HOME/.bashrc" ;;
+    *) primary_rc="$HOME/.zshrc" ;;
+  esac
+  [ "$primary_rc" = "$HOME/.config/fish/config.fish" ] && mkdir -p "$HOME/.config/fish"
+
+  wrote=""
+  for rc in "$primary_rc" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.config/fish/config.fish"; do
+    [ -e "$rc" ] || [ "$rc" = "$primary_rc" ] || continue
+    case " $wrote " in *" $rc "*) continue ;; esac
+    if [ -e "$rc" ] && grep -q "$PATH_MARKER" "$rc" 2>/dev/null; then
+      wrote="$wrote $rc"
+      continue
+    fi
+    case "$rc" in
+      *config.fish) line="set -gx PATH \"$INSTALL_DIR_LITERAL\" \$PATH" ;;
+      *) line="export PATH=\"$INSTALL_DIR_LITERAL:\$PATH\"" ;;
+    esac
+    {
+      printf '\n%s\n' "$PATH_MARKER"
+      printf '%s\n' "$line"
+    } >> "$rc" 2>/dev/null && wrote="$wrote $rc"
+  done
+
+  if [ -n "$wrote" ]; then
+    log "PATH configurado em:$wrote"
+  else
+    log "aviso: não foi possível editar seu rc para configurar o PATH"
+  fi
+  # O script roda num processo filho e não altera o PATH do shell que o chamou:
+  # sem esta linha o usuário volta a esbarrar em "command not found".
+  log "rode agora:  export PATH=\"$INSTALL_DIR:\$PATH\" && prismon"
+  log "(em terminais novos, só: prismon)"
 }
 
 main "$@"

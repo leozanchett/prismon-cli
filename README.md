@@ -11,8 +11,16 @@ curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/instal
 ```
 
 - Valida o sha256 do release antes de instalar
-- Instala em `~/.local/bin` (override: `PRISMON_INSTALL_DIR`)
+- Instala em `~/.local/bin` (override: `PRISMON_INSTALL_DIR`) e adiciona esse diretório ao PATH do seu shell
 - Versão específica: `PRISMON_VERSION=0.4.0 sh install.sh`
+
+O instalador roda num processo filho e não altera o PATH do terminal que o chamou. Para usar `prismon` na mesma janela, rode o comando que ele imprime no final:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH" && prismon
+```
+
+Em terminais abertos depois da instalação basta `prismon`.
 
 É o mesmo layout que o auto-update usa, então o CLI passa a se manter atualizado sozinho.
 
