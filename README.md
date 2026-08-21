@@ -36,7 +36,7 @@ irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 |
 - Instala em `%LOCALAPPDATA%\prismon` e adiciona esse diretório ao PATH do usuário
 - Versão específica: `$env:PRISMON_VERSION='0.4.0'; irm ... | iex`
 
-Depois rode `prismon` nesse terminal: ele pede gateway e virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. No Windows, Claude Code (CLI, via wrapper), Codex CLI, Grok CLI, Antigravity (`agy`), Claude Desktop, Claude Web, ChatGPT Web (visitante), Gemini Web e Lovable Web estão homologados — feche o app ou o navegador por completo (Claude Desktop pela bandeja), reabra e envie uma mensagem; só abrir não captura. A primeira execução pede UAC para instalar a CA no store da máquina (necessário para o Claude Desktop da Microsoft Store). Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
+Depois rode `prismon` nesse terminal: ele pede a virtual key, instala a CA no store do usuário (confirme o diálogo do Windows), sobe o proxy como serviço de login e liga o proxy de sistema (WinINET) para desktop e navegador que respeitam o proxy do Windows. Não precisa deixar o terminal aberto. Use `claude`, `codex`, `grok`, `agy` ou `gemini` em qualquer terminal novo. No Windows, Claude Code (CLI, via wrapper), Codex CLI, Grok CLI, Antigravity (`agy`), Claude Desktop, Claude Web, ChatGPT Web (visitante), Gemini Web e Lovable Web estão homologados — feche o app ou o navegador por completo (Claude Desktop pela bandeja), reabra e envie uma mensagem; só abrir não captura. A primeira execução pede UAC para instalar a CA no store da máquina (necessário para o Claude Desktop da Microsoft Store). Apps com certificate pinning ou que ignoram o proxy do SO continuam fora.
 
 ### Já instalou por Homebrew?
 
@@ -53,7 +53,7 @@ prismon
 ## Uso
 
 ```bash
-prismon   # primeira execução: configura gateway + key, instala a CA local e os aliases de CLIs
+prismon   # primeira execução: configura a virtual key, instala a CA local e os aliases de CLIs
 ```
 
 No macOS e no Windows o proxy passa a rodar como serviço de login — sobe sozinho a cada login, sem terminal aberto — e o auto-update é ativado. No Windows os CLIs entram pelos wrappers e o desktop/web entra pelo proxy de sistema (WinINET/WinHTTP), quando o app respeita o proxy do SO.
@@ -69,7 +69,7 @@ Depois disso, use as ferramentas normalmente (Claude Desktop e navegadores no ma
 | `prismon matrix` | lista os apps e CLIs de IA homologados |
 | `prismon stop` | para o serviço (ele volta no próximo login) |
 | `prismon doctor` | diagnóstico do ambiente, com auto-correção de estados degradados |
-| `prismon config` | altera a URL do gateway e a virtual key salvas |
+| `prismon config` | altera a virtual key salva |
 | `prismon update` | atualiza para a última versão agora (`--check` apenas verifica) |
 | `prismon updater` | controla o auto-update de hora em hora (`install`/`status`/`uninstall`) |
 | `prismon service` | controla o serviço em segundo plano (`install`/`start`/`stop`/`status`/`uninstall`) |
