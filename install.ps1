@@ -1,7 +1,7 @@
 # Instala o prismon CLI a partir do GitHub Releases (repo público, sem auth).
 #
 # Uso:
-#   irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/premiersoft/prismon/main/install.ps1 | iex
 #   $env:PRISMON_VERSION = '0.1.0'; irm ... | iex
 #
 # Variáveis:
@@ -9,7 +9,7 @@
 #   PRISMON_INSTALL_DIR  default: %LOCALAPPDATA%\prismon
 $ErrorActionPreference = 'Stop'
 
-$Repo = 'leozanchett/prismon-cli'
+$Repo = 'premiersoft/prismon'
 $InstallDir = if ($env:PRISMON_INSTALL_DIR) { $env:PRISMON_INSTALL_DIR } else { Join-Path $env:LOCALAPPDATA 'prismon' }
 
 function Write-Log([string]$Message) {

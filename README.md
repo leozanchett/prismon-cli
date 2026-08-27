@@ -7,7 +7,7 @@ Proxy HTTPS local para auditar chamadas de ferramentas LLM (desktop, web e CLIs 
 ### macOS / Linux
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/premiersoft/prismon/main/install.sh | sh
 ```
 
 - Valida o sha256 do release antes de instalar
@@ -29,7 +29,7 @@ Em terminais abertos depois da instalação basta `prismon`.
 No PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/premiersoft/prismon/main/install.ps1 | iex
 ```
 
 - Valida o sha256 do release antes de instalar
@@ -46,7 +46,7 @@ Para migrar:
 
 ```bash
 brew uninstall prismon
-curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/premiersoft/prismon/main/install.sh | sh
 prismon
 ```
 

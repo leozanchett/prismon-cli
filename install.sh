@@ -2,7 +2,7 @@
 # Instala o prismon CLI a partir do GitHub Releases (repo público, sem auth).
 #
 # Uso:
-#   curl -fsSL https://raw.githubusercontent.com/leozanchett/prismon-cli/main/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/premiersoft/prismon/main/install.sh | sh
 #   PRISMON_VERSION=0.1.0 sh install.sh   # versão específica
 #
 # Variáveis:
@@ -10,7 +10,7 @@
 #   PRISMON_INSTALL_DIR  default: ~/.local/bin
 set -eu
 
-REPO="leozanchett/prismon-cli"
+REPO="premiersoft/prismon"
 INSTALL_DIR="${PRISMON_INSTALL_DIR:-$HOME/.local/bin}"
 # Forma com $HOME literal, para o rc não ficar preso ao caminho absoluto atual.
 case "$INSTALL_DIR" in
